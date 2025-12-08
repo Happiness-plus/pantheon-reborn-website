@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Pantheon Reborn </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Pantheon Reborn – a post-scarcity god-killer academy visual novel and webcomic about engineered demigods training to destroy the God of Capitalism."
+  />
+  <style>
+    :root {
+      --bg: #05060a;
+      --bg-alt: #0d1018;
+      --accent-1: #71f7ff;
+      --accent-2: #b88cff;
+      --accent-soft: rgba(184, 140, 255, 0.16);
+      --text-main: #f5f7ff;
+      --text-muted: #9ca3c7;
+      --border-soft: rgba(255, 255, 255, 0.08);
+      --danger: #ff4a7a;
+      --radius-lg: 18px;
+      --radius-xl: 24px;
+      --shadow-soft: 0 22px 60px rgba(0, 0, 0, 0.7);
+      --max-width: 1040px;
+      --transition-fast: 0.18s ease-out;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #111429 0, #05060a 52%, #020308 100%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    /* Layout */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(16px);
+      background: linear-gradient(
+        to bottom,
+        rgba(5, 6, 10, 0.9),
+        rgba(5, 6, 10, 0.65),
+        transparent
+      );
+      border-bottom: 1px solid rgba(113, 247, 255, 0.08);
+    }
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-mark {
+      width: 30px;
+      height: 30px;
+      border-radius: 999px;
+      background: conic-gradient(
+        from 180deg,
+        var(--accent-1),
+        var(--accent-2),
+        #ff7ca0,
+        var(--accent-1)
+      );
+      box-shadow: 0 0 24px rgba(113, 247, 255, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .brand-mark::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: inherit;
+      background: radial-gradient(circle at 30% 20%, #101529, #05060a 60%);
+    }
+
+    .brand-text-main {
+      font-size: 1.05rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .brand-text-sub {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .nav-link {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      padding: 4px 8px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: color var(--transition-fast), background var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .nav-link:hover {
+      color: var(--text-main);
+      background: rgba(184, 140, 255, 0.12);
+    }
+
+    .nav-cta {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(113, 247, 255, 0.7);
+      background: radial-gradient(circle at 0 0, rgba(113, 247, 255, 0.16), transparent);
+      color: var(--accent-1);
+      font-size: 0.8rem;
+      font-weight: 500;
+    }
+
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      cursor: pointer;
+    }
+
+    .nav-toggle span {
+      width: 19px;
+      height: 2px;
+      border-radius: 999px;
+      background: var(--text-main);
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .shell {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 26px 20px 56px;
+    }
+
+    section {
+      margin-top: 40px;
+    }
+
+    section:first-of-type {
+      margin-top: 18px;
+    }
+
+    /* Hero */
+    #hero {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.2fr);
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-title {
+      font-size: clamp(2.1rem, 3vw + 1rem, 3rem);
+      line-height: 1.05;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .hero-gradient-text {
+      background: linear-gradient(120deg, var(--accent-1), var(--accent-2), #ff7ca0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      margin-top: 14px;
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 32rem;
+    }
+
+    .hero-subtitle strong {
+      color: var(--accent-1);
+      font-weight: 500;
+    }
+
+    .hero-actions {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 9px 18px;
+      font-size: 0.9rem;
+      border: 1px solid transparent;
+      cursor: pointer;
+      background: transparent;
+      color: inherit;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform 0.08s ease-out, box-shadow var(--transition-fast),
+        background var(--transition-fast), border-color var(--transition-fast),
+        color var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent-1), var(--accent-2));
+      color: #060713;
+      font-weight: 600;
+      box-shadow: 0 12px 40px rgba(113, 247, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 48px rgba(113, 247, 255, 0.4);
+    }
+
+    .btn-secondary {
+      border-color: rgba(113, 247, 255, 0.5);
+      color: var(--accent-1);
+      background: radial-gradient(circle at 0 0, rgba(113, 247, 255, 0.16), transparent);
+    }
+
+    .btn-secondary:hover {
+      background: radial-gradient(circle at 0 0, rgba(113, 247, 255, 0.24), transparent);
+    }
+
+    .btn-ghost {
+      border-color: rgba(184, 140, 255, 0.4);
+      color: var(--text-muted);
+      background: radial-gradient(circle at 100% 0, rgba(184, 140, 255, 0.12), transparent);
+      font-size: 0.8rem;
+    }
+
+    .btn-ghost:hover {
+      color: var(--accent-2);
+      border-color: var(--accent-2);
+    }
+
+    .hero-meta {
+      margin-top: 12px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .pill {
+      padding: 3px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(156, 163, 199, 0.4);
+      background: rgba(8, 11, 24, 0.8);
+    }
+
+    .hero-card {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(113, 247, 255, 0.3);
+      background: radial-gradient(circle at 0 0, rgba(113, 247, 255, 0.18), transparent),
+        linear-gradient(145deg, rgba(5, 6, 10, 0.96), rgba(5, 6, 10, 0.9));
+      box-shadow: var(--shadow-soft);
+      padding: 16px 18px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -60px;
+      background-image: radial-gradient(circle at 10% 0%, rgba(113, 247, 255, 0.2), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(184, 140, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 40% 110%, rgba(255, 124, 160, 0.16), transparent 50%);
+      opacity: 0.8;
+      pointer-events: none;
+    }
+
+    .hero-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(5, 6, 10, 0.92);
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(245, 247, 255, 0.85);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .hero-card-title {
+      margin-top: 10px;
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .hero-card-text {
+      margin-top: 8px;
+      font-size: 0.85rem;
+      color: rgba(244, 246, 255, 0.86);
+    }
+
+    .hero-stats {
+      margin-top: 14px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 0.78rem;
+      color: rgba(244, 246, 255, 0.92);
+    }
+
+    .hero-stat-label {
+      color: rgba(244, 246, 255, 0.7);
+      font-size: 0.75rem;
+    }
+
+    .hero-constellation {
+      margin-top: 14px;
+      height: 120px;
+      border-radius: 16px;
+      border: 1px solid rgba(244, 246, 255, 0.22);
+      background:
+        radial-gradient(circle at 10% 0%, rgba(113, 247, 255, 0.14), transparent 55%),
+        radial-gradient(circle at 80% 100%, rgba(184, 140, 255, 0.18), transparent 50%),
+        radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.12), transparent 65%),
+        #05060a;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-constellation-dot {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      border-radius: 999px;
+      background: #f5f7ff;
+      box-shadow: 0 0 12px rgba(113, 247, 255, 0.9);
+    }
+
+    .hero-constellation-line {
+      position: absolute;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(113, 247, 255, 0.2), rgba(184, 140, 255, 0.8));
+      transform-origin: left center;
+    }
+
+    /* Explore section */
+    .section-headline {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: radial-gradient(circle at 0 0, var(--accent-soft), rgba(7, 10, 20, 0.98));
+      padding: 13px 12px 12px;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: transform 0.1s ease-out, box-shadow var(--transition-fast),
+        border-color var(--transition-fast), background var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(113, 247, 255, 0.6);
+      box-shadow: 0 18px 52px rgba(0, 0, 0, 0.85);
+      background: radial-gradient(circle at 0 0, rgba(113, 247, 255, 0.28), #070a18);
+    }
+
+    .card-tag {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--text-muted);
+    }
+
+    .card-title {
+      font-size: 0.95rem;
+      font-weight: 500;
+    }
+
+    .card-text {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+    }
+
+    .card-meta {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: rgba(197, 203, 235, 0.9);
+    }
+
+    .card-link-label {
+      margin-top: 6px;
+      font-size: 0.78rem;
+      color: var(--accent-1);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Story */
+    .story-body {
+      margin-top: 12px;
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      max-width: 44rem;
+      line-height: 1.6;
+    }
+
+    .story-body em {
+      color: var(--accent-2);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .story-highlight {
+      margin-top: 16px;
+      padding: 10px 12px;
+      border-radius: var(--radius-lg);
+      border: 1px dashed rgba(113, 247, 255, 0.4);
+      background: rgba(5, 8, 18, 0.9);
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Characters */
+    .characters-grid {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .character-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-soft);
+      background: linear-gradient(160deg, rgba(9, 12, 28, 0.96), rgba(8, 9, 20, 0.98));
+      box-shadow: 0 14px 38px rgba(0, 0, 0, 0.6);
+      padding: 11px 11px 10px;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .character-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .character-name {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .character-tag {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--text-muted);
+    }
+
+    .character-role {
+      font-size: 0.74rem;
+      color: var(--accent-1);
+    }
+
+    .character-body {
+      margin-top: 4px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .character-guild {
+      margin-top: 4px;
+      font-size: 0.7rem;
+      color: rgba(184, 140, 255, 0.85);
+    }
+
+    /* Follow / CTA */
+    .follow-layout {
+      margin-top: 18px;
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 18px;
+    }
+
+    .follow-text {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+    }
+
+    .follow-actions {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .follow-panel {
+      border-radius: var(--radius-xl);
+      padding: 14px 14px 12px;
+      border: 1px solid rgba(184, 140, 255, 0.5);
+      background: radial-gradient(circle at 0 0, rgba(184, 140, 255, 0.24), #070814);
+      font-size: 0.8rem;
+      color: rgba(244, 246, 255, 0.92);
+      box-shadow: 0 18px 50px rgba(0, 0, 0, 0.86);
+    }
+
+    .follow-panel h3 {
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+    }
+
+    .follow-note {
+      margin-top: 10px;
+      font-size: 0.75rem;
+      color: #d1d5f0;
+    }
+
+    /* Adult section (SFW, but pointing to 18+ area) */
+    #adult-hub {
+      margin-top: 40px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(113, 247, 255, 0.16);
+    }
+
+    .adult-text {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      max-width: 34rem;
+      margin-top: 4px;
+    }
+
+    .adult-warning {
+      margin-top: 10px;
+      font-size: 0.78rem;
+      color: var(--danger);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(24, 28, 54, 0.95);
+      background: #05060a;
+    }
+
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 14px 20px 18px;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      text-decoration: underline;
+      text-decoration-color: rgba(156, 163, 199, 0.4);
+      text-underline-offset: 3px;
+    }
+
+    /* Modal (age gate) */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 70;
+    }
+
+    .modal-backdrop.is-visible {
+      display: flex;
+    }
+
+    .modal {
+      max-width: 360px;
+      width: calc(100% - 32px);
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: radial-gradient(circle at 0 0, rgba(255, 74, 122, 0.18), #05060a);
+      padding: 16px 18px 14px;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.95);
+      font-size: 0.86rem;
+    }
+
+    .modal-title {
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .modal-text {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .modal-buttons {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .modal-age {
+      font-size: 0.74rem;
+      color: rgba(255, 199, 215, 0.95);
+      margin-top: 8px;
+    }
+
+    /* Responsive */
+    @media (max-width: 860px) {
+      #hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-card {
+        order: -1;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .characters-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .follow-layout {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-toggle {
+        display: flex;
+      }
+
+      nav {
+        position: absolute;
+        inset-inline: 0;
+        top: 100%;
+        padding: 8px 18px 10px;
+        background: rgba(5, 6, 10, 0.98);
+        border-bottom: 1px solid rgba(113, 247, 255, 0.16);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+        transform-origin: top;
+        transform: scaleY(0);
+        opacity: 0;
+        pointer-events: none;
+        transition: transform 0.12s ease-out, opacity 0.12s ease-out;
+      }
+
+      nav.is-open {
+        transform: scaleY(1);
+        opacity: 1;
+        pointer-events: auto;
+      }
+
+      .nav-cta {
+        align-self: stretch;
+        text-align: center;
+        justify-content: center;
+      }
+
+      .shell {
+        padding-top: 18px;
+      }
+
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .characters-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-title {
+        font-size: 2rem;
+      }
+
+      .hero-subtitle {
+        font-size: 0.9rem;
+      }
+
+      .hero-card {
+        margin-top: 6px;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="brand-mark" aria-hidden="true"></div>
+          <div>
+            <div class="brand-text-main">Pantheon Reborn</div>
+            <div class="brand-text-sub">Phoenix Academy • Zeta-7</div>
+          </div>
+        </div>
+        <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <span></span><span></span><span></span>
+        </div>
+        <nav id="navMenu">
+          <button class="nav-link" data-scroll="#hero">Overview</button>
+          <button class="nav-link" data-scroll="#explore">Read &amp; Play</button>
+          <button class="nav-link" data-scroll="#story">World</button>
+          <button class="nav-link" data-scroll="#characters">Cast</button>
+          <button class="nav-link" data-scroll="#follow">Community</button>
+          <button class="nav-cta" data-scroll="#explore">Start here</button>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <div class="shell">
+        <!-- HERO -->
+        <section id="hero">
+          <div>
+            <h1 class="hero-title">
+              <span class="hero-gradient-text">Pantheon Reborn</span><br />
+              God-killer academy in a post-scarcity future.
+            </h1>
+            <p class="hero-subtitle">
+              On <strong>Terra</strong>, money is extinct and bioengineered demigods train at
+              <strong>Phoenix Academy</strong> to destroy the last gods of modernity:
+              Mammonas, the God of Capitalism, and Tyrannos, the God of Fascism.
+            </p>
+            <div class="hero-actions">
+              <!-- TODO: replace # with your real URLs -->
+              <a href="#" class="btn btn-primary">Read the Comic</a>
+              <a href="#" class="btn btn-secondary">Wishlist the Visual Novel</a>
+              <button class="btn btn-ghost" data-scroll="#explore">All links</button>
+            </div>
+            <div class="hero-meta">
+              <span class="pill">Post-scarcity sci-fi fantasy</span>
+              <span class="pill">Queer &amp; poly-inclusive</span>
+              <span class="pill">Kinetic novel • Webcomic • Soundtrack</span>
+            </div>
+          </div>
+          <aside class="hero-card" aria-label="Phoenix Academy dossier">
+            <div class="hero-card-inner">
+              <div class="hero-card-label">
+                <span aria-hidden="true">◎</span>
+                Phoenix Academy File
+              </div>
+              <div class="hero-card-title">
+                Subject: Zeta-7 Cohort &ldquo;Aura&rdquo;
+              </div>
+              <p class="hero-card-text">
+                Engineered in the Bogato labs from thousand-year-old nanotech, Aura joins Phoenix
+                Academy to train as a god-killer. Her existence is a political experiment:
+                proof that humanity can transcend both capital and the celestials that weaponized it.
+              </p>
+              <div class="hero-stats">
+                <div>
+                  <div class="hero-stat-label">Designation</div>
+                  <div>Aura Nivoria • Z-7</div>
+                </div>
+                <div>
+                  <div class="hero-stat-label">Specialization</div>
+                  <div>Dialectical combat &amp; support</div>
+                </div>
+                <div>
+                  <div class="hero-stat-label">Threat index</div>
+                  <div>Class S • &ldquo;Pantheon Reborn&rdquo;</div>
+                </div>
+              </div>
+              <div class="hero-constellation" aria-hidden="true" id="constellation">
+                <!-- dots and lines injected via JS -->
+              </div>
+            </div>
+          </aside>
+        </section>
+
+        <!-- EXPLORE -->
+        <section id="explore">
+          <div class="section-headline">Gateway</div>
+          <h2 class="section-title">Read, play, and listen</h2>
+          <p class="section-subtitle">
+            This is your hub for every incarnation of Pantheon Reborn — from the kinetic novel to
+            the vertical comic and the soundtrack that scores the war against Mammonas.
+          </p>
+
+          <div class="grid">
+            <!-- Comic -->
+            <a class="card" href="#">
+              <!-- TODO: replace with Webtoon Canvas URL -->
+              <div class="card-tag">Comic</div>
+              <div class="card-title">Webtoon / Mobile comic</div>
+              <div class="card-text">
+                Follow the Phoenix Academy cohort in a vertical-scroll adaptation built for phones.
+              </div>
+              <div class="card-meta">Webtoon Canvas • Tapas • Comic Fury</div>
+              <div class="card-link-label">Open comic hub →</div>
+            </a>
+            <!-- VN -->
+            <a class="card" href="#">
+              <!-- TODO: replace with Steam page -->
+              <div class="card-tag">Visual Novel</div>
+              <div class="card-title">Kinetic Novel • Season 1 (Ch.0–6)</div>
+              <div class="card-text">
+                The definitive story cut with full soundtrack, CGs, and god-killer battles.
+              </div>
+              <div class="card-meta">Steam • PC • (future mobile port)</div>
+              <div class="card-link-label">Wishlist on Steam →</div>
+            </a>
+            <!-- Soundtrack -->
+            <a class="card" href="#">
+              <!-- TODO: replace with Bandcamp/Spotify -->
+              <div class="card-tag">Music</div>
+              <div class="card-title">Original Soundtrack</div>
+              <div class="card-text">
+                From quiet commune nights to celestial wars — the sonic arc of Pantheon Reborn.
+              </div>
+              <div class="card-meta">Bandcamp • Spotify • YouTube</div>
+              <div class="card-link-label">Listen to the OST →</div>
+            </a>
+            <!-- Devlog -->
+            <a class="card" href="#">
+              <!-- TODO: replace with your devlog URL (e.g., blog.hentaicoop.com tag) -->
+              <div class="card-tag">Devlog</div>
+              <div class="card-title">Developer Notes</div>
+              <div class="card-text">
+                Deep dives into world-building, economy design, and engine updates from the creator.
+              </div>
+              <div class="card-meta">Hosted on Hentai Cooperative dev blog</div>
+              <div class="card-link-label">Read dev updates →</div>
+            </a>
+            <!-- Lore / Docs -->
+            <a class="card" href="#">
+              <!-- TODO: replace with lore wiki / Notion / docs -->
+              <div class="card-tag">Lore</div>
+              <div class="card-title">Heavenly Dialecticas &amp; Terra</div>
+              <div class="card-text">
+                Optional reading: essays on the Dark Age, Lumiviran wars, and Terra&rsquo;s planned
+                economy.
+              </div>
+              <div class="card-meta">Spoiler-heavy • Reader beware</div>
+              <div class="card-link-label">Open lore archive →</div>
+            </a>
+            <!-- Presskit -->
+            <a class="card" href="#">
+              <!-- TODO: replace with presskit (Google Drive, Notion, etc.) -->
+              <div class="card-tag">Press / Creators</div>
+              <div class="card-title">Presskit &amp; Creator Resources</div>
+              <div class="card-text">
+                One place for logos, key art, synopsis, and contact info for coverage or collabs.
+              </div>
+              <div class="card-meta">Safe for work • No explicit content</div>
+              <div class="card-link-label">Open presskit →</div>
+            </a>
+          </div>
+        </section>
+
+        <!-- STORY -->
+        <section id="story">
+          <div class="section-headline">World</div>
+          <h2 class="section-title">After capitalism, the gods remained.</h2>
+          <div class="story-body">
+            For two thousand years, Terra has existed without money. Communes share resources,
+            Parenting Guilds raise children collectively, and the old nation-states are ash and
+            myth. But when humanity overthrew capital, the gods of capital did not vanish —
+            they fled.
+            <br /><br />
+            <em>Mammonas</em>, the God of Capitalism, and <em>Tyrannos</em>, the God of Fascism,
+            hid beyond the multiverse, feeding on timelines, resurrecting financial empires, and
+            rewriting history. To keep them from returning, Terra founded a single institution:
+            <strong>Phoenix Academy</strong>, where engineered demigods learn to kill gods.
+          </div>
+          <div class="story-highlight">
+            Season 1 (Chapters 0–6) follows Aura and the Zeta-7 cohort as they navigate
+            Phoenix Academy, commune politics, Parenting Guild rivalries, and the first hints
+            that the pantheon of modernity is not as dead as Terra believes.
+          </div>
+        </section>
+
+        <!-- CHARACTERS -->
+        <section id="characters">
+          <div class="section-headline">Cast</div>
+          <h2 class="section-title">Phoenix cohort &amp; pantheon</h2>
+          <p class="section-subtitle">
+            A few of the faces at the center of the war over history, memory, and divinity.
+          </p>
+
+          <div class="characters-grid">
+            <article class="character-card">
+              <div class="character-header">
+                <div>
+                  <div class="character-name">Aura Nivoria</div>
+                  <div class="character-role">Zeta-7 Support / Analyst</div>
+                </div>
+                <div class="character-tag">Protagonist</div>
+              </div>
+              <p class="character-body">
+                Bioengineered from ancient Bogato nanotech, Aura is a living experiment in
+                post-capitalist humanity. She reads battlefields like spreadsheets and treats
+                gods like systems to be debugged.
+              </p>
+              <div class="character-guild">Bogato Parenting Guild • Phoenix Academy recruit</div>
+            </article>
+
+            <article class="character-card">
+              <div class="character-header">
+                <div>
+                  <div class="character-name">Darius Astrathis</div>
+                  <div class="character-role">Zeta-7 Vanguard</div>
+                </div>
+                <div class="character-tag">Frontliner</div>
+              </div>
+              <p class="character-body">
+                A frontline god-killer in training whose combat instincts mask a deep distrust of
+                celestials and communes alike. Darius measures everything in terms of who survives.
+              </p>
+              <div class="character-guild">Astrathis Line • Phoenix Academy duelist</div>
+            </article>
+
+            <article class="character-card">
+              <div class="character-header">
+                <div>
+                  <div class="character-name">Xena Aquoris</div>
+                  <div class="character-role">Zeta-7 Specialist</div>
+                </div>
+                <div class="character-tag">Rival</div>
+              </div>
+              <p class="character-body">
+                A prodigy from the Aquoris Guild whose hydro-weaponry and political sharpness make
+                her both Aura&rsquo;s rival and potential ally in reshaping Terra&rsquo;s future.
+              </p>
+              <div class="character-guild">Aquoris Parenting Guild • Political heir</div>
+            </article>
+
+            <article class="character-card">
+              <div class="character-header">
+                <div>
+                  <div class="character-name">Phang</div>
+                  <div class="character-role">Independent combatant</div>
+                </div>
+                <div class="character-tag">Wildcard</div>
+              </div>
+              <p class="character-body">
+                A feral genius raised on the edges of commune society, Phang fights like
+                gravity doesn&rsquo;t apply and treats god-killing as a sport, not a sacrament.
+              </p>
+              <div class="character-guild">Unaffiliated • Phoenix Arena regular</div>
+            </article>
+          </div>
+        </section>
+
+        <!-- FOLLOW / COMMUNITY -->
+        <section id="follow">
+          <div class="section-headline">Community</div>
+          <h2 class="section-title">Stay linked into Terra</h2>
+          <div class="follow-layout">
+            <div>
+              <p class="follow-text">
+                Pantheon Reborn is built as a long-running universe: ongoing comic seasons, visual
+                novel chapters, and essays about post-capitalist futures. To follow the project
+                and help shape where the story goes, plug into the channels below.
+              </p>
+              <div class="follow-actions">
+                <!-- TODO: replace # with real URLs -->
+                <a href="#" class="btn btn-secondary">Join the Discord</a>
+                <a href="#" class="btn btn-ghost">Follow on Twitter / Bluesky</a>
+                <a href="#" class="btn btn-ghost">Steam community hub</a>
+              </div>
+            </div>
+            <aside class="follow-panel">
+              <h3>Updates &amp; release radar</h3>
+              <p>
+                Want signals when new chapters or releases land? Add an email list or RSS link
+                here later &mdash; for now, we recommend following via Discord + Steam.
+              </p>
+              <p class="follow-note">
+                Tip: keep this site SFW so you can safely share it with streamers, journalists,
+                teachers, and readers coming from Webtoon, Tapas, or Google Play.
+              </p>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ADULT HUB (SFW, AGE-GATED LINK) -->
+        <section id="adult-hub">
+          <div class="section-headline">18+ Wing</div>
+          <h2 class="section-title">Adults-only extras (off-canon)</h2>
+          <p class="adult-text">
+            Pantheon Reborn is written as a mature, story-first universe. For adult readers who
+            want explicit side stories and NSFW scenes set in the same world, there is a separate
+            18+ corner hosted under Hentai Cooperative.
+          </p>
+          <p class="adult-warning">
+            This content is strictly for adults (18+) and is not required to understand the main
+            story. It is gated and hosted separately from the SFW visual novel and comic.
+          </p>
+          <div class="hero-actions" style="margin-top: 14px;">
+            <button class="btn btn-secondary" id="openAgeGate">
+              Enter 18+ area (age check)
+            </button>
+            <span class="hero-meta">
+              <span class="pill">No explicit material is shown on this page.</span>
+            </span>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <div>
+          © <span id="year"></span> Pantheon Reborn • Hentai Cooperative LLC. All rights reserved.
+        </div>
+        <div class="footer-links">
+          <!-- TODO: update with real policies when ready -->
+          <a href="#">Privacy</a>
+          <a href="#">Terms</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- AGE GATE MODAL -->
+    <div class="modal-backdrop" id="ageGateBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="modal">
+        <div class="modal-title">Adults-only content</div>
+        <p class="modal-text">
+          The 18+ wing of Pantheon Reborn contains explicit sexual material intended only for
+          adults. By choosing to continue, you confirm that you are at least 18 years old (or
+          the legal age in your region).
+        </p>
+        <p class="modal-age">
+          This material is optional, off-canon, and hosted separately from the SFW comic and
+          visual novel.
+        </p>
+        <div class="modal-buttons">
+          <button class="btn btn-primary" id="confirmAdult">I am 18+ • Continue</button>
+          <button class="btn btn-ghost" id="cancelAdult">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Basic smooth scroll for internal nav links
+    document.querySelectorAll("[data-scroll]").forEach((el) => {
+      el.addEventListener("click", (e) => {
+        const target = document.querySelector(el.getAttribute("data-scroll"));
+        if (!target) return;
+        e.preventDefault();
+        const rect = target.getBoundingClientRect();
+        const offset = window.scrollY + rect.top - 68; // header height offset
+        window.scrollTo({ top: offset, behavior: "smooth" });
+
+        const nav = document.getElementById("navMenu");
+        if (nav.classList.contains("is-open")) nav.classList.remove("is-open");
+      });
+    });
+
+    // Mobile nav toggle
+    const navToggle = document.getElementById("navToggle");
+    const navMenu = document.getElementById("navMenu");
+    if (navToggle) {
+      navToggle.addEventListener("click", () => {
+        navMenu.classList.toggle("is-open");
+      });
+    }
+
+    // Constellation decoration
+    (function buildConstellation() {
+      const wrap = document.getElementById("constellation");
+      if (!wrap) return;
+      const dotsConfig = [
+        { x: 12, y: 24 },
+        { x: 40, y: 16 },
+        { x: 68, y: 30 },
+        { x: 52, y: 64 },
+        { x: 26, y: 56 },
+        { x: 82, y: 54 },
+      ];
+
+      // dots
+      dotsConfig.forEach((d, idx) => {
+        const dot = document.createElement("div");
+        dot.className = "hero-constellation-dot";
+        dot.style.left = d.x + "%";
+        dot.style.top = d.y + "%";
+        dot.style.opacity = 0.7 + Math.random() * 0.3;
+        dot.style.transform = `scale(${0.8 + Math.random() * 0.4})`;
+        wrap.appendChild(dot);
+
+        // line to next
+        const next = dotsConfig[idx + 1];
+        if (next) {
+          const line = document.createElement("div");
+          line.className = "hero-constellation-line";
+          const dx = next.x - d.x;
+          const dy = next.y - d.y;
+          const length = Math.sqrt(dx * dx + dy * dy);
+          const angle = Math.atan2(dy, dx) * (180 / Math.PI);
+          line.style.left = d.x + "%";
+          line.style.top = d.y + "%";
+          line.style.width = length + "%";
+          line.style.transform = `rotate(${angle}deg)`;
+          line.style.opacity = 0.55;
+          wrap.appendChild(line);
+        }
+      });
+    })();
+
+    // Age gate modal
+    const openAgeGate = document.getElementById("openAgeGate");
+    const ageGateBackdrop = document.getElementById("ageGateBackdrop");
+    const confirmAdult = document.getElementById("confirmAdult");
+    const cancelAdult = document.getElementById("cancelAdult");
+
+    function showAgeGate() {
+      if (!ageGateBackdrop) return;
+      ageGateBackdrop.classList.add("is-visible");
+      ageGateBackdrop.setAttribute("aria-hidden", "false");
+    }
+
+    function hideAgeGate() {
+      if (!ageGateBackdrop) return;
+      ageGateBackdrop.classList.remove("is-visible");
+      ageGateBackdrop.setAttribute("aria-hidden", "true");
+    }
+
+    if (openAgeGate) {
+      openAgeGate.addEventListener("click", () => {
+        showAgeGate();
+      });
+    }
+
+    if (cancelAdult) {
+      cancelAdult.addEventListener("click", () => {
+        hideAgeGate();
+      });
+    }
+
+    if (ageGateBackdrop) {
+      ageGateBackdrop.addEventListener("click", (e) => {
+        if (e.target === ageGateBackdrop) hideAgeGate();
+      });
+    }
+
+    if (confirmAdult) {
+      confirmAdult.addEventListener("click", () => {
+        // TODO: replace this with your real 18+ URL under the same domain.
+        // Example: window.location.href = "https://pantheonreborn.com/adult";
+        window.location.href = "#";
+      });
+    }
+
+    // Footer year
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
