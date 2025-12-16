@@ -2,13 +2,92 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Pantheon Reborn </title>
+  <title>Pantheon Reborn — Science Fantasy Visual Novel & Webcomic</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="canonical" href="https://pantheonreborn.com/" />
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <link rel="alternate" href="https://pantheonreborn.com/" hreflang="en" />
+  <meta name="theme-color" content="#05060a" />
+  <!-- TODO: add real favicons -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
   <meta
     name="description"
-    content="Pantheon Reborn – a post-scarcity god-killer academy visual novel and webcomic about engineered demigods training to destroy the God of Capitalism."
+    content="On Terra, bioengineered demigods train at Phoenix Academy to kill the last of the New Gods in a post-scarcity world without money."
   />
-  <style>
+
+  <!-- Open Graph -->
+  <meta property="og:site_name" content="Pantheon Reborn" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:title" content="Pantheon Reborn – God-killer academy in a post-scarcity future" />
+  <meta
+    property="og:description"
+    content="On Terra, bioengineered demigods train at Phoenix Academy to kill the last of the New Gods in a post-scarcity world without money."
+  />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pantheonreborn.com/" />
+  <!-- Preload hero image for faster LCP (update href when you move assets) -->
+  <link rel="preload" as="image" href="assets/pantheon-hero.jpg" imagesrcset="assets/pantheon-hero.jpg" />
+
+  <!-- TODO: replace with your real hosted key art asset -->
+  <meta property="og:image" content="https://happiness-plus.github.io/pantheon-reborn-website/assets/pantheon-hero.jpg" />
+
+  <!-- Twitter -->
+  <meta name="twitter:site" content="@pantheonreborn" />
+  <meta name="twitter:creator" content="@pantheonreborn" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Pantheon Reborn – God-killer academy in a post-scarcity future" />
+  <meta
+    name="twitter:description"
+    content="On Terra, bioengineered demigods train at Phoenix Academy to kill the last of the New Gods in a post-scarcity world without money."
+  />
+  <meta name="twitter:image" content="https://happiness-plus.github.io/pantheon-reborn-website/assets/pantheon-hero.jpg" />
+
+  
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"WebSite",
+        "@id":"https://pantheonreborn.com/#website",
+        "url":"https://pantheonreborn.com/",
+        "name":"Pantheon Reborn",
+        "inLanguage":"en",
+        "potentialAction":{
+          "@type":"SearchAction",
+          "target":"https://pantheonreborn.com/?q={search_term_string}",
+          "query-input":"required name=search_term_string"
+        }
+      },
+      {
+        "@type":"Organization",
+        "@id":"https://pantheonreborn.com/#org",
+        "name":"Hentai Cooperative LLC",
+        "url":"https://pantheonreborn.com/",
+        "brand":{"@type":"Brand","name":"Pantheon Reborn"}
+      },
+      {
+        "@type":"VideoGame",
+        "@id":"https://pantheonreborn.com/#game",
+        "name":"Pantheon Reborn",
+        "url":"https://pantheonreborn.com/",
+        "genre":["Visual Novel","Science Fiction","Political Fiction"],
+        "description":"A political sci‑fi visual novel set in a post‑scarcity future where bioengineered demigods train at Phoenix Academy to kill the last of the New Gods.",
+        "inLanguage":"en",
+        "applicationCategory":"Game",
+        "operatingSystem":"Windows",
+        "publisher":{"@id":"https://pantheonreborn.com/#org"},
+        "image":"https://pantheonreborn.com/assets/pantheon-hero.jpg"
+      }
+    ]
+  }
+  </script>
+
+<style>
     :root {
       --bg: #05060a;
       --bg-alt: #0d1018;
@@ -50,6 +129,13 @@
       display: block;
     }
 
+    button:focus-visible,
+    a:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--accent-1);
+      outline-offset: 2px;
+    }
+
     /* Layout */
     .page {
       min-height: 100vh;
@@ -85,6 +171,12 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .brand-logo {
+      height: 26px;
+      width: auto;
+      display: block;
     }
 
     .brand-mark {
@@ -139,6 +231,8 @@
       cursor: pointer;
       transition: color var(--transition-fast), background var(--transition-fast);
       white-space: nowrap;
+      background: transparent;
+      border: none;
     }
 
     .nav-link:hover {
@@ -154,6 +248,8 @@
       color: var(--accent-1);
       font-size: 0.8rem;
       font-weight: 500;
+      cursor: pointer;
+      white-space: nowrap;
     }
 
     .nav-toggle {
@@ -281,6 +377,19 @@
       border-color: var(--accent-2);
     }
 
+    .btn-danger {
+      background: linear-gradient(120deg, var(--danger), #ff9fbf);
+      color: #060713;
+      font-weight: 600;
+      border-color: rgba(255, 74, 122, 0.9);
+      box-shadow: 0 12px 40px rgba(255, 74, 122, 0.45);
+    }
+
+    .btn-danger:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 50px rgba(255, 74, 122, 0.6);
+    }
+
     .hero-meta {
       margin-top: 12px;
       display: flex;
@@ -322,6 +431,21 @@
     .hero-card-inner {
       position: relative;
       z-index: 1;
+    }
+
+    .hero-art-wrapper {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(244, 246, 255, 0.3);
+      margin-bottom: 10px;
+      background: radial-gradient(circle at 50% 0, rgba(113, 247, 255, 0.2), transparent 55%);
+    }
+
+    .hero-art {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      display: block;
     }
 
     .hero-card-label {
@@ -393,7 +517,7 @@
       transform-origin: left center;
     }
 
-    /* Explore section */
+    /* Sections */
     .section-headline {
       font-size: 0.78rem;
       text-transform: uppercase;
@@ -413,6 +537,7 @@
       max-width: 32rem;
     }
 
+    /* Read & Play grid */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -482,6 +607,20 @@
       line-height: 1.6;
     }
 
+    .story-body p + p {
+      margin-top: 10px;
+    }
+
+    .story-body ul {
+      margin-top: 10px;
+      margin-left: 1.2rem;
+      list-style: disc;
+    }
+
+    .story-body li {
+      margin-bottom: 4px;
+    }
+
     .story-body em {
       color: var(--accent-2);
       font-style: normal;
@@ -518,6 +657,22 @@
       gap: 4px;
       position: relative;
       overflow: hidden;
+    }
+
+    .character-media {
+      width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(156, 163, 199, 0.35);
+      margin-bottom: 6px;
+      background: radial-gradient(circle at 50% 0, rgba(113, 247, 255, 0.22), transparent 60%);
+    }
+
+    .character-portrait {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
     }
 
     .character-header {
@@ -594,16 +749,51 @@
     }
 
     .follow-note {
-      margin-top: 10px;
+      margin-top: 6px;
       font-size: 0.75rem;
       color: #d1d5f0;
+    }
+
+    .updates-form {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .updates-form label {
+      font-size: 0.75rem;
+      color: rgba(209, 213, 240, 0.9);
+    }
+
+    .updates-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .updates-form input[type="email"] {
+      flex: 1;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(156, 163, 199, 0.7);
+      background: #05060a;
+      color: var(--text-main);
+      font-size: 0.8rem;
+    }
+
+    .updates-form input[type="email"]::placeholder {
+      color: rgba(156, 163, 199, 0.8);
     }
 
     /* Adult section (SFW, but pointing to 18+ area) */
     #adult-hub {
       margin-top: 40px;
-      padding-top: 22px;
-      border-top: 1px solid rgba(113, 247, 255, 0.16);
+      padding: 20px 16px 18px;
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255, 74, 122, 0.55);
+      background: radial-gradient(circle at 0 0, rgba(255, 74, 122, 0.18), #070814);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
     }
 
     .adult-text {
@@ -709,6 +899,10 @@
         order: -1;
       }
 
+      .hero-art {
+        height: 180px;
+      }
+
       .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -791,22 +985,29 @@
     <header>
       <div class="nav-inner">
         <div class="brand">
+          <!-- TODO: replace with your actual logo asset -->
+          <img
+            src="assets/pantheon-logo.svg"
+            alt="Pantheon Reborn logo"
+            class="brand-logo"
+          />
           <div class="brand-mark" aria-hidden="true"></div>
           <div>
             <div class="brand-text-main">Pantheon Reborn</div>
             <div class="brand-text-sub">Phoenix Academy • Zeta-7</div>
           </div>
         </div>
-        <div class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-controls="navMenu" aria-expanded="false" type="button">
           <span></span><span></span><span></span>
-        </div>
-        <nav id="navMenu">
-          <button class="nav-link" data-scroll="#hero">Overview</button>
-          <button class="nav-link" data-scroll="#explore">Read &amp; Play</button>
-          <button class="nav-link" data-scroll="#story">World</button>
-          <button class="nav-link" data-scroll="#characters">Cast</button>
-          <button class="nav-link" data-scroll="#follow">Community</button>
-          <button class="nav-cta" data-scroll="#explore">Start here</button>
+        </button>
+        <nav id="navMenu" aria-label="Primary">
+          <a class="nav-link" href="#hero">Overview</a>
+          <a class="nav-link" href="#explore">Read &amp; Play</a>
+          <a class="nav-link" href="#story">World</a>
+          <a class="nav-link" href="#characters">Cast</a>
+          <a class="nav-link" href="#follow">Community</a>
+          <a class="nav-link" href="#adult-hub">18+</a>
+          <a class="nav-cta" href="#explore">Wishlist VN</a>
         </nav>
       </div>
     </header>
@@ -818,17 +1019,21 @@
           <div>
             <h1 class="hero-title">
               <span class="hero-gradient-text">Pantheon Reborn</span><br />
-              God-killer academy in a post-scarcity future.
+              A  science fantasy visual novel about killing gods.
             </h1>
             <p class="hero-subtitle">
               On <strong>Terra</strong>, money is extinct and bioengineered demigods train at
-              <strong>Phoenix Academy</strong> to destroy the last gods of modernity:
-              Mammonas, the God of Capitalism, and Tyrannos, the God of Fascism.
+              <strong>Phoenix Academy</strong> to kill the last of the New Gods.
+            </p>
+            <p class="hero-subtitle" style="max-width: 44rem;">
+              <strong>Pantheon Reborn</strong> is a story-first <strong>kinetic visual novel</strong> and <strong>webcomic</strong> about post-capitalist life on Terra—where
+              <strong>Parenting Guilds</strong> raise children collectively and engineered demigods train at <strong>Phoenix Academy</strong> to eliminate the last surviving
+              <strong>New Gods</strong> of the Age of Dominion.
             </p>
             <div class="hero-actions">
               <!-- TODO: replace # with your real URLs -->
-              <a href="#" class="btn btn-primary">Read the Comic</a>
-              <a href="#" class="btn btn-secondary">Wishlist the Visual Novel</a>
+              <a href="#" class="btn btn-primary">Wishlist on Steam</a>
+              <a href="#" class="btn btn-secondary">Read the Comic</a>
               <button class="btn btn-ghost" data-scroll="#explore">All links</button>
             </div>
             <div class="hero-meta">
@@ -839,6 +1044,14 @@
           </div>
           <aside class="hero-card" aria-label="Phoenix Academy dossier">
             <div class="hero-card-inner">
+              <div class="hero-art-wrapper">
+                <!-- TODO: replace src with real hero key art -->
+                <img
+                  src="assets/pantheon-hero.jpg"
+                  alt="Aura Nivoria and the Zeta-7 cohort standing before Phoenix Academy"
+                  class="hero-art"
+                />
+              </div>
               <div class="hero-card-label">
                 <span aria-hidden="true">◎</span>
                 Phoenix Academy File
@@ -847,9 +1060,9 @@
                 Subject: Zeta-7 Cohort &ldquo;Aura&rdquo;
               </div>
               <p class="hero-card-text">
-                Engineered in the Bogato labs from thousand-year-old nanotech, Aura joins Phoenix
-                Academy to train as a god-killer. Her existence is a political experiment:
-                proof that humanity can transcend both capital and the celestials that weaponized it.
+                Engineered from thousand-year-old nanotech, Aura joins Phoenix Academy to train
+                as a god-killer. Her existence is a living experiment: a synthesis of
+                nanotechnology and divine blessing in a world that outlived capitalism.
               </p>
               <div class="hero-stats">
                 <div>
@@ -859,10 +1072,6 @@
                 <div>
                   <div class="hero-stat-label">Specialization</div>
                   <div>Dialectical combat &amp; support</div>
-                </div>
-                <div>
-                  <div class="hero-stat-label">Threat index</div>
-                  <div>Class S • &ldquo;Pantheon Reborn&rdquo;</div>
                 </div>
               </div>
               <div class="hero-constellation" aria-hidden="true" id="constellation">
@@ -897,7 +1106,7 @@
             <a class="card" href="#">
               <!-- TODO: replace with Steam page -->
               <div class="card-tag">Visual Novel</div>
-              <div class="card-title">Kinetic Novel • Season 1 (Ch.0–6)</div>
+              <div class="card-title">Kinetic Novel • The First Arc</div>
               <div class="card-text">
                 The definitive story cut with full soundtrack, CGs, and god-killer battles.
               </div>
@@ -924,7 +1133,9 @@
                 Deep dives into world-building, economy design, and engine updates from the creator.
               </div>
               <div class="card-meta">Hosted on Hentai Cooperative dev blog</div>
-              <div class="card-link-label">Read dev updates →</div>
+              <div class="card-link-label">
+                <span>Read the devlog →</span>
+              </div>
             </a>
             <!-- Lore / Docs -->
             <a class="card" href="#">
@@ -955,22 +1166,40 @@
         <!-- STORY -->
         <section id="story">
           <div class="section-headline">World</div>
-          <h2 class="section-title">After capitalism, the gods remained.</h2>
+          <h2 class="section-title">After the Dark Age, one last New God remained</h2>
+
           <div class="story-body">
-            For two thousand years, Terra has existed without money. Communes share resources,
-            Parenting Guilds raise children collectively, and the old nation-states are ash and
-            myth. But when humanity overthrew capital, the gods of capital did not vanish —
-            they fled.
-            <br /><br />
-            <em>Mammonas</em>, the God of Capitalism, and <em>Tyrannos</em>, the God of Fascism,
-            hid beyond the multiverse, feeding on timelines, resurrecting financial empires, and
-            rewriting history. To keep them from returning, Terra founded a single institution:
-            <strong>Phoenix Academy</strong>, where engineered demigods learn to kill gods.
+            <p>
+              For nearly two thousand years, Terra has lived without money. In most communes,
+              resources flow freely by design—needs are guaranteed, and “work” is contribution
+              instead of survival.
+            </p>
+            <p>
+              Children aren&rsquo;t raised by nuclear families. Almost everyone is created and raised
+              through democratic <strong>Parenting Guilds</strong>. These are tribes of collective caretaking,
+              bioengineering, and living covenants that carry forward the blessings
+              of the Old Gods.
+            </p>
+            <ul>
+              <li>Communes plan production together instead of competing in markets.</li>
+              <li>Debt, rent, and wages are outlawed relics of the Dark Age.</li>
+              <li>Spiritual traditions persist as plural, syncretic cults rather than empires.</li>
+            </ul>
+            <p>
+              Prophets, seers, and revelators warned that the <em>New Gods</em> would return to
+              remake humanity through domination. To prepare, Terra built
+              <strong>Phoenix Academy</strong>, a democratic university city-state with an acceptance
+              rate near 0.1%, where engineered demigods train for a war of divinity: how to murder a
+              deity before it rewrites history again.
+            </p>
           </div>
+
           <div class="story-highlight">
-            Season 1 (Chapters 0–6) follows Aura and the Zeta-7 cohort as they navigate
-            Phoenix Academy, commune politics, Parenting Guild rivalries, and the first hints
-            that the pantheon of modernity is not as dead as Terra believes.
+            The first arc follows Aura Nivoria as she arrives at Phoenix and is pulled into sparring
+            culture, Parenting Guild honor, and the academy&rsquo;s real purpose: preparing students
+            for the coming conflict with the New Gods. Alongside new allies and rivals, Aura begins
+            to uncover the deeper systems behind Phoenix—including Phia, a war-built AGI tied to the
+            academy&rsquo;s planning and survival.
           </div>
         </section>
 
@@ -984,6 +1213,14 @@
 
           <div class="characters-grid">
             <article class="character-card">
+              <div class="character-media">
+                <!-- TODO: replace with real portrait art -->
+                <img
+                  src="assets/characters/aura-nivoria.jpg"
+                  alt="Portrait of Aura Nivoria from the Nivoria Parenting Guild"
+                  class="character-portrait"
+                />
+              </div>
               <div class="character-header">
                 <div>
                   <div class="character-name">Aura Nivoria</div>
@@ -992,56 +1229,86 @@
                 <div class="character-tag">Protagonist</div>
               </div>
               <p class="character-body">
-                Bioengineered from ancient Bogato nanotech, Aura is a living experiment in
-                post-capitalist humanity. She reads battlefields like spreadsheets and treats
-                gods like systems to be debugged.
+                Bioengineered from ancient nanotech, Aura is a living experiment in
+                post-scarcity humanity who reads battlefields like spreadsheets and treats gods
+                like systems to debug. 
               </p>
-              <div class="character-guild">Bogato Parenting Guild • Phoenix Academy recruit</div>
+              <div class="character-guild">
+                Nivoria Parenting Guild •
+              </div>
             </article>
 
             <article class="character-card">
+              <div class="character-media">
+                <!-- TODO: replace with real portrait art -->
+                <img
+                  src="assets/characters/darius-astrathis.jpg"
+                  alt="Portrait of Darius Astrathis, a vanguard fighter at Phoenix Academy"
+                  class="character-portrait"
+                />
+              </div>
               <div class="character-header">
                 <div>
                   <div class="character-name">Darius Astrathis</div>
-                  <div class="character-role">Zeta-7 Vanguard</div>
+                  <div class="character-role">Vanguard</div>
                 </div>
                 <div class="character-tag">Frontliner</div>
               </div>
               <p class="character-body">
-                A frontline god-killer in training whose combat instincts mask a deep distrust of
-                celestials and communes alike. Darius measures everything in terms of who survives.
+                Darius was blessed by the gift of Lighting by Thor, and bioengineered to half-feline: quiet, subtle, and deadly. 
               </p>
-              <div class="character-guild">Astrathis Line • Phoenix Academy duelist</div>
+              <div class="character-guild">
+                Astrathis 
+              </div>
             </article>
 
             <article class="character-card">
+              <div class="character-media">
+                <!-- TODO: replace with real portrait art -->
+                <img
+                  src="assets/characters/xena-aquoris.jpg"
+                  alt="Portrait of Xena Aquoris from the Aquoris Parenting Guild"
+                  class="character-portrait"
+                />
+              </div>
               <div class="character-header">
                 <div>
                   <div class="character-name">Xena Aquoris</div>
-                  <div class="character-role">Zeta-7 Specialist</div>
+                  <div class="character-role">Prodigy</div>
                 </div>
                 <div class="character-tag">Rival</div>
               </div>
               <p class="character-body">
-                A prodigy from the Aquoris Guild whose hydro-weaponry and political sharpness make
+                A water-wielding prodigy whose political sharpness and ruthless discipline make
                 her both Aura&rsquo;s rival and potential ally in reshaping Terra&rsquo;s future.
               </p>
-              <div class="character-guild">Aquoris Parenting Guild • Political heir</div>
+              <div class="character-guild">
+                Aquoris 
+              </div>
             </article>
 
             <article class="character-card">
+              <div class="character-media">
+                <!-- TODO: replace with real portrait art -->
+                <img
+                  src="assets/characters/phang.jpg"
+                  alt="Portrait of Phang, an unaffiliated arena fighter"
+                  class="character-portrait"
+                />
+              </div>
               <div class="character-header">
                 <div>
                   <div class="character-name">Phang</div>
-                  <div class="character-role">Independent combatant</div>
+                  <div class="character-role"> Solar-powered half-lion combatant</div>
                 </div>
-                <div class="character-tag">Wildcard</div>
+                <div class="character-tag">Horny Wildcard</div>
               </div>
               <p class="character-body">
-                A feral genius raised on the edges of commune society, Phang fights like
-                gravity doesn&rsquo;t apply and treats god-killing as a sport, not a sacrament.
+                Phang Soltharium hails, from one of the Noble parenting guilds of Soltharium, worshippers of deity Ra. Phang was blessed with the gift Solar radiation and bioengineered as a half-human/half-lion hybrid.
               </p>
-              <div class="character-guild">Unaffiliated • Phoenix Arena regular</div>
+              <div class="character-guild">
+                Soltharium
+              </div>
             </article>
           </div>
         </section>
@@ -1054,7 +1321,7 @@
             <div>
               <p class="follow-text">
                 Pantheon Reborn is built as a long-running universe: ongoing comic seasons, visual
-                novel chapters, and essays about post-capitalist futures. To follow the project
+                novel chapters, and essays about post-scarcity futures. To follow the project
                 and help shape where the story goes, plug into the channels below.
               </p>
               <div class="follow-actions">
@@ -1067,13 +1334,28 @@
             <aside class="follow-panel">
               <h3>Updates &amp; release radar</h3>
               <p>
-                Want signals when new chapters or releases land? Add an email list or RSS link
-                here later &mdash; for now, we recommend following via Discord + Steam.
+                Get signals when new chapters, OST tracks, or builds drop. Drop your email below
+                for low-noise, release-focused updates.
               </p>
-              <p class="follow-note">
-                Tip: keep this site SFW so you can safely share it with streamers, journalists,
-                teachers, and readers coming from Webtoon, Tapas, or Google Play.
-              </p>
+              <form class="updates-form">
+                <label for="updates-email">Email (optional)</label>
+                <div class="updates-row">
+                  <input
+                    type="email"
+                    id="updates-email"
+                    name="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                  />
+                  <button type="submit" class="btn btn-secondary">
+                    Notify me
+                  </button>
+                </div>
+                <p class="follow-note">
+                  Until the mailing list is fully wired up, Discord and the Steam hub will still be
+                  the fastest way to catch updates.
+                </p>
+              </form>
             </aside>
           </div>
         </section>
@@ -1081,14 +1363,14 @@
         <!-- ADULT HUB (SFW, AGE-GATED LINK) -->
         <section id="adult-hub">
           <div class="section-headline">18+ Wing</div>
-          <h2 class="section-title">Adults-only extras (off-canon)</h2>
+          <h2 class="section-title">Adults-only extras</h2>
           <p class="adult-text">
             Pantheon Reborn is written as a mature, story-first universe. For adult readers who
             want explicit side stories and NSFW scenes set in the same world, there is a separate
             18+ corner hosted under Hentai Cooperative.
           </p>
           <p class="adult-warning">
-            This content is strictly for adults (18+) and is not required to understand the main
+            ⚠️ This content is strictly for adults (18+) and is not required to understand the main
             story. It is gated and hosted separately from the SFW visual novel and comic.
           </p>
           <div class="hero-actions" style="margin-top: 14px;">
@@ -1100,8 +1382,50 @@
             </span>
           </div>
         </section>
+
+        <!-- FAQ (visible, indexable) -->
+        <section id="faq">
+          <div class="section-headline">FAQ</div>
+          <h2 class="section-title">Pantheon Reborn FAQ</h2>
+          <div class="story-body">
+            <p><strong>Is Pantheon Reborn a dating sim?</strong><br/>No. It is a <strong>kinetic visual novel</strong> (story-first) with a parallel webcomic.</p>
+            <p><strong>What genre is it?</strong><br/>Political science fiction / mythic fantasy: demigods, planned post-scarcity society, and gods representing capitalism and domination.</p>
+            <p><strong>Do I need the 18+ content?</strong><br/>No. The SFW visual novel and comic stand alone. Adult extras are optional and hosted separately behind an age gate.</p>
+            <p><strong>Where do I start?</strong><br/>Wishlist the visual novel, then read the comic adaptation if you prefer a faster entry.</p>
+          </div>
+        </section>
+
+        <!-- FAQ schema -->
+        <script type="application/ld+json">
+        {
+          "@context":"https://schema.org",
+          "@type":"FAQPage",
+          "mainEntity":[
+            {
+              "@type":"Question",
+              "name":"Is Pantheon Reborn a dating sim?",
+              "acceptedAnswer":{"@type":"Answer","text":"No. Pantheon Reborn is a story-first kinetic visual novel with a parallel webcomic."}
+            },
+            {
+              "@type":"Question",
+              "name":"What genre is Pantheon Reborn?",
+              "acceptedAnswer":{"@type":"Answer","text":"Political science fiction with mythic fantasy elements: engineered demigods, a post-scarcity society, and gods representing capitalism and domination."}
+            },
+            {
+              "@type":"Question",
+              "name":"Do I need the 18+ content to understand the story?",
+              "acceptedAnswer":{"@type":"Answer","text":"No. The SFW visual novel and comic stand alone. Adult extras are optional and hosted separately behind an age gate."}
+            },
+            {
+              "@type":"Question",
+              "name":"Where should I start?",
+              "acceptedAnswer":{"@type":"Answer","text":"Start by wishlisting the visual novel, then read the comic adaptation if you prefer a faster entry."}
+            }
+          ]
+        }
+        </script>
       </div>
-    </main>
+    </main
 
     <footer>
       <div class="footer-inner">
@@ -1118,7 +1442,13 @@
     </footer>
 
     <!-- AGE GATE MODAL -->
-    <div class="modal-backdrop" id="ageGateBackdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div
+      class="modal-backdrop"
+      id="ageGateBackdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-hidden="true"
+    >
       <div class="modal">
         <div class="modal-title">Adults-only content</div>
         <p class="modal-text">
@@ -1131,7 +1461,9 @@
           visual novel.
         </p>
         <div class="modal-buttons">
-          <button class="btn btn-primary" id="confirmAdult">I am 18+ • Continue</button>
+          <button class="btn btn-danger" id="confirmAdult">
+            I am 18+ • Continue to 18+ site
+          </button>
           <button class="btn btn-ghost" id="cancelAdult">Cancel</button>
         </div>
       </div>
@@ -1139,7 +1471,8 @@
   </div>
 
   <script>
-    // Basic smooth scroll for internal nav links
+    
+    
     document.querySelectorAll("[data-scroll]").forEach((el) => {
       el.addEventListener("click", (e) => {
         const target = document.querySelector(el.getAttribute("data-scroll"));
@@ -1160,6 +1493,7 @@
     if (navToggle) {
       navToggle.addEventListener("click", () => {
         navMenu.classList.toggle("is-open");
+        navToggle.setAttribute("aria-expanded", navMenu.classList.contains("is-open") ? "true" : "false");
       });
     }
 
@@ -1246,6 +1580,17 @@
         // TODO: replace this with your real 18+ URL under the same domain.
         // Example: window.location.href = "https://pantheonreborn.com/adult";
         window.location.href = "#";
+      });
+    }
+
+    // Dummy handler for updates form (so it doesn't just reload the page)
+    const updatesForm = document.querySelector(".updates-form");
+    if (updatesForm) {
+      updatesForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        alert(
+          "Thanks! This demo form doesn\u2019t send email yet. For now, Discord and the Steam hub are the best way to get updates."
+        );
       });
     }
 
